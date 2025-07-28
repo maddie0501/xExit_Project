@@ -11,8 +11,10 @@ export default function EmployeeDashboard() {
   const [submitted, setSubmitted] = useState(() => {
     return localStorage.getItem("exitSubmitted") === "true";
   });
+  const API_URL = import.meta.env.VITE_API_BASE_URL;
+
   const submitResignation = async () => {
-    const res = await fetch("http://localhost:3001/api/user/resign", {
+    const res = await fetch(`${API_URL}/api/user/resign`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -27,7 +29,7 @@ export default function EmployeeDashboard() {
   };
 
   const submitResponses = async () => {
-    const res = await fetch("http://localhost:3001/api/user/responses", {
+    const res = await fetch(`${API_URL}/api/user/responses`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

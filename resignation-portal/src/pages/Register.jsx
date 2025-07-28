@@ -1,14 +1,15 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Register = () => {
   const [formData, setFormData] = useState({
-    username: '',
-    password: '',
-    role: '', // admin or employee
+    username: "",
+    password: "",
+    role: "", // admin or employee
   });
+  const API_URL = import.meta.env.VITE_API_BASE_URL;
 
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -22,28 +23,28 @@ const Register = () => {
     e.preventDefault();
 
     try {
-      const response = await fetch('http://localhost:3001/api/auth/register', {
-        method: 'POST',
+      const response = await fetch(`${API_URL}/api/auth/register`, {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(formData),
       });
 
       const data = await response.json();
 
-      console.log(response,data)
+      console.log(response, data);
 
       if (!response.ok) {
-        setError(data.message || 'Registration failed');
+        setError(data.message || "Registration failed");
         return;
       }
 
-      alert('Registration successful. Please login.');
-      navigate('/login');
+      alert("Registration successful. Please login.");
+      navigate("/login");
     } catch (err) {
       console.error(err);
-      setError('Something went wrong');
+      setError("Something went wrong");
     }
   };
 
@@ -83,7 +84,10 @@ const Register = () => {
 
         {error && <p className="text-red-500">{error}</p>}
 
-        <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded">
+        <button
+          type="submit"
+          className="bg-blue-500 text-white px-4 py-2 rounded"
+        >
           Register
         </button>
       </form>

@@ -1,40 +1,41 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function Login() {
-  const [form, setForm] = useState({ username: '', password: '' });
+  const [form, setForm] = useState({ username: "", password: "" });
   const navigate = useNavigate();
 
- const handleLogin = async () => {
-  try {
-    const res = await fetch('http://localhost:3001/api/auth/login', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(form),
-    });
+  const API_URL = import.meta.env.VITE_API_BASE_URL;
 
-    const data = await res.json();
-    console.log(data)
+  const handleLogin = async () => {
+    try {
+      const res = await fetch(`${API_URL}/api/auth/login`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      });
 
-    if (res.ok) {
-      localStorage.setItem('token', data.token);
-      localStorage.setItem('role', data.role); // store actual role
+      const data = await res.json();
+      console.log(data);
 
-      // Navigate based on role
-      if (data.role === 'admin') {
-        navigate('/admin');
+      if (res.ok) {
+        localStorage.setItem("token", data.token);
+        localStorage.setItem("role", data.role); // store actual role
+
+        // Navigate based on role
+        if (data.role === "admin") {
+          navigate("/admin");
+        } else {
+          navigate("/employee");
+        }
       } else {
-        navigate('/employee');
+        alert(data.message || "Login failed");
       }
-    } else {
-      alert(data.message || 'Login failed');
+    } catch (error) {
+      alert("Something went wrong");
+      console.error(error);
     }
-  } catch (error) {
-    alert('Something went wrong');
-    console.error(error);
-  }
-};
-
+  };
 
   return (
     <div className="p-4 max-w-md mx-auto">
@@ -50,7 +51,10 @@ export default function Login() {
         type="password"
         onChange={(e) => setForm({ ...form, password: e.target.value })}
       />
-      <button className="bg-blue-600 text-white px-4 py-2" onClick={handleLogin}>
+      <button
+        className="bg-blue-600 text-white px-4 py-2"
+        onClick={handleLogin}
+      >
         Login
       </button>
     </div>
