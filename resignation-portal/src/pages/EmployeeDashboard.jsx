@@ -1,7 +1,9 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function EmployeeDashboard() {
   const [lwd, setLwd] = useState("");
+  const navigate = useNavigate();
 
   const [responses, setResponses] = useState([
     { questionText: "Why are you leaving?", response: "" },
@@ -87,6 +89,14 @@ export default function EmployeeDashboard() {
           {loading ? "Submitting..." : "Submit Interview"}
         </button>
       </div>
+
+      <button
+        onClick={() => navigate("/register")}
+        type="submit"
+        className="bg-blue-500 text-white px-4 py-2 rounded"
+      >
+        Logout
+      </button>
     </div>
   );
 }

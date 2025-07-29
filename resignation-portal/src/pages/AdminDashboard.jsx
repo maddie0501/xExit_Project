@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function AdminDashboard() {
   const [resignations, setResignations] = useState([]);
@@ -9,6 +10,7 @@ export default function AdminDashboard() {
   const token = localStorage.getItem("token");
 
   const API_URL = import.meta.env.VITE_API_BASE_URL;
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchResignations = async () => {
@@ -30,7 +32,7 @@ export default function AdminDashboard() {
     };
 
     fetchResignations();
-  }, [token,API_URL]);
+  }, [token, API_URL]);
 
   const handleApproval = async (resignationId, action) => {
     try {
@@ -85,7 +87,9 @@ export default function AdminDashboard() {
   }, [API_URL]);
   return (
     <div className="p-4">
-      <h1 className="text-xl font-bold mb-4">All Resignations</h1>
+      <h1 className="text-xl font-bold mb-4">
+        All Resignations - Admin Dashboard
+      </h1>
 
       {loading && <p>Loading...</p>}
       {error && <p className="text-red-500">{error}</p>}
@@ -140,6 +144,14 @@ export default function AdminDashboard() {
           </div>
         ))}
       </div>
+
+      <button
+        onClick={() => navigate("/register")}
+        type="submit"
+        className="bg-blue-500 text-white px-4 py-2 rounded"
+      >
+        Logout
+      </button>
     </div>
   );
 }
