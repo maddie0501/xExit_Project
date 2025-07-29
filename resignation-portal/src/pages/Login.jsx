@@ -7,6 +7,8 @@ export default function Login() {
 
   const API_URL = import.meta.env.VITE_API_BASE_URL;
 
+  // console.log(API_URL)
+
   const handleLogin = async () => {
     try {
       const res = await fetch(`${API_URL}/api/auth/login`, {

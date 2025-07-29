@@ -9,6 +9,8 @@ const Register = () => {
   });
   const API_URL = import.meta.env.VITE_API_BASE_URL;
 
+  // console.log('api',import.meta.env.VITE_API_BASE_URL)
+
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
